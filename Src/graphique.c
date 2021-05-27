@@ -2,6 +2,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <math.h>
+#include "touches.h"
 
 void retailler(GLsizei largeur, GLsizei hauteur) {
 
@@ -92,8 +93,10 @@ void dessiner(void) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -5.0f);
-    glRotatef(20.0f, 0.0f, 1.0f, 0.0f);
+    glTranslatef(0.0f, 0.0f, trans_axeZ);
+    glRotatef(angle_rotY, 0.0f, 1.0f, 0.0f);
+    glRotatef(angle_rotX, 1.0f, 0.0f, 0.0f);
+    glScalef(kx,ky,kz);
 
     /* effacer l'ecran */
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

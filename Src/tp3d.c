@@ -1,7 +1,7 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
-
+#include "touches.h"
 #include "graphique.h"
 
 /* dimensions initiales de la fen�tre d'affichage */
@@ -17,7 +17,12 @@ static void init_screen(void) {
     glLoadIdentity();
     gluPerspective(60.0f, 1.00f, 1.00f, 50.00f);
     glViewport(0, 0, LARGEUR, HAUTEUR);
-
+    trans_axeZ = -5.0f;
+    angle_rotY = 0.0f;
+    angle_rotX = 0.f;
+    kx = 1.0f;
+    ky = 1.0f;
+    kz = 1.0f;
 }
 
 
@@ -42,7 +47,8 @@ int main(int argc, char *argv[]) {
     /* choix de la fonction de rafraichissement */
     glutDisplayFunc(dessiner);
     glutReshapeFunc(retailler);
-
+    glutKeyboardUpFunc(gerer_clavier);
+    glutSpecialUpFunc(gerer_clavier);
     init_screen();
 
     // activer l'élimination des parties cachées
