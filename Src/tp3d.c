@@ -12,11 +12,11 @@
 /**
  * Fonction d'initialisation des param�tres d'affichage
  */
-static void init_screen(void){
+static void init_screen(void) {
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(60.0f,1.00f,1.00f,50.00f);
-    glViewport(0,0,LARGEUR,HAUTEUR);
+    gluPerspective(60.0f, 1.00f, 1.00f, 50.00f);
+    glViewport(0, 0, LARGEUR, HAUTEUR);
 
 }
 
@@ -28,30 +28,30 @@ static void init_screen(void){
  * @param argv une table de chaîne de caractères contenant chacun
  * des arguments de la ligne de commande.
  */
-int main (int argc, char *argv[]){
+int main(int argc, char *argv[]) {
 
-  glutInit (&argc, argv);
+    glutInit(&argc, argv);
 
-  glutInitWindowPosition(100, 100); 
-  glutInitWindowSize(LARGEUR, HAUTEUR); 
+    glutInitWindowPosition(100, 100);
+    glutInitWindowSize(LARGEUR, HAUTEUR);
 
-  glutInitDisplayMode(GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DEPTH);
 
-  glutCreateWindow(argv[0]);
+    glutCreateWindow(argv[0]);
 
-  /* choix de la fonction de rafraichissement */
-  glutDisplayFunc(dessiner);
+    /* choix de la fonction de rafraichissement */
+    glutDisplayFunc(dessiner);
+    glutReshapeFunc(retailler);
+
+    init_screen();
+
+    // activer l'élimination des parties cachées
+    glEnable(GL_DEPTH_TEST);
+
+    glutMainLoop();
 
 
-  init_screen();
-
-  // activer l'élimination des parties cachées
-  glEnable(GL_DEPTH_TEST);
-  
-  glutMainLoop();
-  
-
-  return 0;
+    return 0;
 }
 
 

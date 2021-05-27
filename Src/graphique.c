@@ -1,49 +1,60 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
+#include <math.h>
 
+void retailler(GLsizei largeur, GLsizei hauteur) {
+
+    GLsizei size = largeur < hauteur ? largeur : hauteur;
+    glViewport((largeur-size)/2,(hauteur-size)/2, size,size);
+    glutPostRedisplay();
+}
 
 /**
  * Fonction permettant de dessiner un cube centré sur l'origine
  * du repère de de taille dimxdimxdim.
  * @param dim la taille du côté du cube.
  */
-
 static void cube(float dim) {
     dim = dim / 2.0f;
     glColor3f(1.0f, 0.0f, 0.0f);
     glBegin(GL_QUADS);
     {
         //Face 1
-        glVertex3f(-dim,dim,dim);
-        glVertex3f(dim,dim,dim);
-        glVertex3f(dim,-dim,dim);
-        glVertex3f(-dim,-dim,dim);
-        //Face 2
-        glVertex3f(-dim,dim,-dim);
-        glVertex3f(dim,dim,-dim);
-        glVertex3f(dim,-dim,-dim);
-        glVertex3f(-dim,-dim,-dim);
-        //Face 3
-        glVertex3f(-dim,-dim,dim);
-        glVertex3f(dim,-dim,dim);
-        glVertex3f(dim,-dim,-dim);
-        glVertex3f(-dim,-dim,-dim);
-        //Face 4
-        glVertex3f(-dim,dim,dim);
-        glVertex3f(dim,dim,dim);
-        glVertex3f(dim,dim,-dim);
-        glVertex3f(-dim,dim,-dim);
-        //Face 5
-        glVertex3f(-dim,-dim,dim);
-        glVertex3f(-dim,dim,dim);
-        glVertex3f(-dim,dim,-dim);
-        glVertex3f(-dim,-dim,-dim);
-        //Face 6
-        glVertex3f(dim,-dim,dim);
-        glVertex3f(dim,dim,dim);
-        glVertex3f(dim,dim,-dim);
-        glVertex3f(dim,-dim,-dim);
+        glVertex3f(-dim, dim, dim);
+        glVertex3f(dim, dim, dim);
+        glVertex3f(dim, -dim, dim);
+        glVertex3f(-dim, -dim, dim);
+        //Face arrière
+        glColor3f(1.0f, 1.0f, 1.0f);
+        glVertex3f(-dim, dim, -dim);
+        glVertex3f(dim, dim, -dim);
+        glVertex3f(dim, -dim, -dim);
+        glVertex3f(-dim, -dim, -dim);
+        //Face inférieur
+        glColor3f(1.0f, 0.0f, 1.0f);
+        glVertex3f(-dim, -dim, dim);
+        glVertex3f(dim, -dim, dim);
+        glVertex3f(dim, -dim, -dim);
+        glVertex3f(-dim, -dim, -dim);
+        //Face supérieur
+        glColor3f(0.0f, 1.0f, 1.0f);
+        glVertex3f(-dim, dim, dim);
+        glVertex3f(dim, dim, dim);
+        glVertex3f(dim, dim, -dim);
+        glVertex3f(-dim, dim, -dim);
+        //Face gauche
+        glColor3f(1.0f, 1.0f, 0.0f);
+        glVertex3f(-dim, -dim, dim);
+        glVertex3f(-dim, dim, dim);
+        glVertex3f(-dim, dim, -dim);
+        glVertex3f(-dim, -dim, -dim);
+        //Face droite
+        glColor3f(0.0f, 1.0f, 0.0f);
+        glVertex3f(dim, -dim, dim);
+        glVertex3f(dim, dim, dim);
+        glVertex3f(dim, dim, -dim);
+        glVertex3f(dim, -dim, -dim);
     }
     glEnd();
 }
@@ -81,7 +92,8 @@ void dessiner(void) {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0f,0.0f,-5.0f);
+    glTranslatef(0.0f, 0.0f, -5.0f);
+    glRotatef(20.0f, 0.0f, 1.0f, 0.0f);
 
     /* effacer l'ecran */
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);

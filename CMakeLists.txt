@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.6)
-project (tp1)
+project (tp2)
 set(SRCS
     ./Src/tp3d.c
     ./Src/graphique.c
