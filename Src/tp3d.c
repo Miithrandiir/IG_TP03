@@ -40,7 +40,7 @@ int main(int argc, char *argv[]) {
     glutInitWindowPosition(100, 100);
     glutInitWindowSize(LARGEUR, HAUTEUR);
 
-    glutInitDisplayMode(GLUT_DEPTH);
+    glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE);
 
     glutCreateWindow(argv[0]);
 
