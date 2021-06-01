@@ -61,6 +61,77 @@ static void cube(float dim) {
     glEnd();
 }
 
+void cylindreFerme(GLfloat r, GLfloat h, int numc) {
+    double angleValue = (double) 2 * M_PI / (double) numc;
+    double oldX = r;
+    double oldY = 0;
+    glColor3f(1, 0, 0);
+
+    for (double i = angleValue; i <= 2 * M_PI; i += angleValue) {
+        glBegin(GL_QUADS);
+        {
+            glVertex3f(r * cos(i), r * sin(i), 0);
+            glVertex3f(oldX, oldY, 0);
+            glVertex3f(oldX, oldY, h);
+            glVertex3f(r * cos(i), r * sin(i), h);
+
+            glVertex3f(r * cos(i), r * sin(i), 0);
+            glVertex3f(oldX, oldY, 0);
+            glVertex3f(oldX, 0, 0);
+            glVertex3f(r * cos(i), 0, 0);
+        }
+        glEnd();
+        oldX = r * cos(i);
+        oldY = r * sin(i);
+    }
+}
+
+void cylindreCreux(GLfloat rext, GLfloat rint, GLfloat h, int numc) {
+
+    double angleValue = (double) 2 * M_PI / (double) numc;
+    double oldXint = rint;
+    double oldYint = 0;
+    double oldXext = rext;
+    double oldYext = 0;
+    glColor3f(1, 0, 0);
+
+    for (double i = angleValue; i <= 2 * M_PI; i += angleValue) {
+        glBegin(GL_QUADS);
+        {
+            glColor3f(1,0,0);
+            /*intérieur*/
+            glVertex3f(rint * cos(i), rint * sin(i), 0);
+            glVertex3f(oldXint, oldYint, 0);
+            glVertex3f(oldXint, oldYint, h);
+            glVertex3f(rint * cos(i), rint * sin(i), h);
+            glColor3f(0,1,0);
+
+            glVertex3f(rext * cos(i), rext * sin(i), 0);
+            glVertex3f(oldXext, oldYext, 0);
+            glVertex3f(oldXext, oldYext, h);
+            glVertex3f(rext * cos(i), rext * sin(i), h);
+
+            glColor3f(0.75,0.2,0.5);
+            glVertex3f(rext * cos(i), rext * sin(i), 0);
+            glVertex3f(oldXext, oldYext, 0);
+            glVertex3f(oldXint,oldYint,0);
+            glVertex3f(rint * cos(i), rint*sin(i), 0);
+
+            glColor3f(0.25,0.5,0.75);
+            glVertex3f(rext * cos(i), rext * sin(i), h);
+            glVertex3f(oldXext, oldYext, h);
+            glVertex3f(oldXint,oldYint,h);
+            glVertex3f(rint * cos(i), rint*sin(i), h);
+
+        }
+        glEnd();
+        oldXext = rext * cos(i);
+        oldYext = rext * sin(i);
+        oldXint = rint * cos(i);
+        oldYint = rint * sin(i);
+    }
+}
+
 /**
  * Fonction permettant de dessiner un cylindre
  * @param r
@@ -72,20 +143,20 @@ void cylindre(float r, float h, int nb) {
     double oldX = r;
     double oldY = 0;
     glColor3f(1, 0, 0);
-    glBegin(GL_QUADS);
-    {
-        for (double i = angleValue; i <= 2 * M_PI; i += angleValue) {
 
+    for (double i = angleValue; i <= 2 * M_PI; i += angleValue) {
+        glBegin(GL_QUADS);
+        {
             glVertex3f(r * cos(i), r * sin(i), 0);
             glVertex3f(oldX, oldY, 0);
             glVertex3f(oldX, oldY, h);
             glVertex3f(r * cos(i), r * sin(i), h);
 
-            oldX = r * cos(i);
-            oldY = r * sin(i);
         }
+        glEnd();
+        oldX = r * cos(i);
+        oldY = r * sin(i);
     }
-    glEnd();
 }
 
 /**
@@ -169,7 +240,7 @@ void aile() {
 void fuselage() {
     double hauteur = 2;
     double largeur = 1;
-    cylindre(largeur, hauteur, 100);
+    cylindreFerme(largeur, hauteur, 100);
     glColor3f(0, 1, 0);
     glMatrixMode(GL_MODELVIEW);
     glPushMatrix();//On sauvegarde avant le translate
@@ -178,14 +249,14 @@ void fuselage() {
     glutSolidSphere(largeur, 100, 100);
     glPopMatrix(); //Retablie la pos.
     glPushMatrix();
-    glColor3f(1,0,0);
-    glTranslatef(0,0,-0.75);
+    glColor3f(1, 0, 0);
+    glTranslatef(0, 0, -0.75);
     helice();
     glPopMatrix();
     glPushMatrix();
-    glTranslatef(0,0,2);
-    glColor3f(0,1,1);
-    glutSolidCone(1,1,100,100);
+    glTranslatef(0, 0, 2);
+    glColor3f(0, 1, 1);
+    glutSolidCone(1, 1, 100, 100);
     glPopMatrix();
 
 }
@@ -226,7 +297,6 @@ void dessiner(void) {
     glRotatef(angle_rotY, 0.0f, 1.0f, 0.0f);
     glRotatef(angle_rotX, 1.0f, 0.0f, 0.0f);
     glScalef(kx, ky, kz);
-    srand(time(NULL));
     /* effacer l'ecran */
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -258,12 +328,12 @@ void dessiner(void) {
     glPopMatrix();
     glPushMatrix();
     glTranslatef(-0.75, -0.75, 1);
-    glRotatef(90,0,1,0);
-    cylindre(0.1,1.5,100);
+    glRotatef(90, 0, 1, 0);
+    cylindre(0.1, 1.5, 100);
     glPopMatrix();
     glPushMatrix();
-    glColor3f(0.5,0.5,0.75);
-    glTranslatef(0,0.75,1);
+    glColor3f(0.5, 0.5, 0.75);
+    glTranslatef(0, 0.75, 1);
     aile();
     glPopMatrix();
     /**
